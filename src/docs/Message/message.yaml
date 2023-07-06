@@ -1,0 +1,11 @@
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        user:
+          type: string
+          required: true
+        message:
+          type: string
+          required: true

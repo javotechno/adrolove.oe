@@ -1,0 +1,206 @@
+tags:
+  - name: products
+    description: Operaciones de productos
+
+paths:
+  /api/products:
+    get:
+      summary: Obtener todos los productos paginados
+      tags: [products]
+      description: Obtiene todos los productos paginados.
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Filtrar productos por título
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Número de página para la paginación
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Cantidad de productos por página
+        - in: query
+          name: sort
+          schema:
+            type: string
+          description: desc
+      responses:
+        200:
+          description: Lista de productos paginados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductPagination'
+        500:
+          description: Error al obtener los productos
+
+  /api/products/{pid}:
+    get:
+      summary: Obtener un producto por su ID
+      tags: [products]
+      description: Obtiene un producto por su ID.
+      parameters:
+        - in: path
+          name: pid
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        200:
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        500:
+          description: Error al obtener el producto por ID
+
+    put:
+      summary: Actualizar un producto por su ID
+      tags: [products]
+      description: Actualiza un producto por su ID.
+      parameters:
+        - in: path
+          name: pid
+          schema:
+            type: string
+          description: ID del producto
+        - in: body
+          name: body
+          schema:
+            $ref: '#/components/schemas/ProductUpdateRequest'
+          description: Datos a actualizar del producto
+      responses:
+        200:
+          description: Producto actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        500:
+          description: Error al actualizar el producto
+
+    delete:
+      summary: Eliminar un producto por su ID
+      tags: [products]
+      description: Elimina un producto por su ID.
+      parameters:
+        - in: path
+          name: pid
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        200:
+          description: Producto eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        500:
+          description: Error al eliminar el producto
+
+  /api/products/mocking:
+    get:
+      summary: Generar datos falsos de productos
+      tags: [products]
+      description: Genera datos falsos de productos.
+      responses:
+        200:
+          description: Datos falsos generados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FakerProduct'
+        500:
+          description: Error al generar datos falsos
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+        price:
+          type: number
+          required: true
+        status:
+          type: boolean
+          required: true
+        thumbnail:
+          type: string
+        code:
+          type: string
+          required: true
+        stock:
+          type: number
+          required: true
+      example:
+        title: Example Product
+        description: Example product description
+        price: 9.99
+        status: true
+        code: ABC123
+        stock: 10
+
+    ProductPagination:
+      type: object
+      properties:
+        status:
+          type: string
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        totalPages:
+          type: number
+        prevPage:
+          type: number
+        nextPage:
+          type: number
+        page:
+          type: number
+        hasPrevPage:
+          type: boolean
+        hasNextPage:
+          type: boolean
+        prevLink:
+          type: string
+        nextLink:
+          type: string
+
+    ProductUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        status:
+          type: boolean
+        thumbnail:
+          type: string
+        code:
+          type: string
+        stock:
+          type: number
+
+    FakerProduct:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number

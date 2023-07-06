@@ -1,0 +1,126 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/style.css">
+
+    <title>Document</title>
+  </head>
+  <body>
+
+    <main>
+      <h3>Agregar Productos</h3>
+      {{!-- form para agregar --}}
+    <form id="form">
+      Titulo:
+      <input type="text" id="title" required/>
+      Descripción:
+      <input type="text" id="desc" required/>
+      Precio:
+      <input type="number" id="price" required/>
+      Thumbnail/imagen descriptiva:
+      <input type="text" id="thumb" />
+      Código identificador:
+      <input type="text" id="code" required/>
+      Stock:
+      <input type="number" id="stock" required/>
+      <button type="submit">Enviar</button>
+    </form>
+    <h3>Eliminar productos</h3>
+      {{!-- form para borrar --}}
+    <form id="formDelete">
+      <p>Cual producto desea eliminar?</p>
+      <input type="text" id="idField" required placeholder="id del producto" />
+      <button type="submit">Enviar</button>
+    </form>
+    <section id="prods">
+      {{! Prods a tiempo real }}
+    </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    const socketClient = io();
+
+const form = document.getElementById("form"); // crear prods
+const formDelete = document.getElementById("formDelete"); // borrar prods
+const title = document.getElementById("title");
+const desc = document.getElementById("desc");
+const price = document.getElementById("price");
+const thumb = document.getElementById("thumb");
+const code = document.getElementById("code");
+const stock = document.getElementById("stock");
+const prods = document.getElementById("prods"); // mostrar prods
+const id = document.getElementById("idField");
+
+socketClient.emit('showProds', {{{toJSON user.role}}} === 'admin' ? undefined : { owner: {{{toJSON user.email}}} })
+
+socketClient.on("prods", (e) => {
+  prods.innerHTML = "";
+  e.map((e) => {
+    let div = document.createElement("div");
+    div.innerHTML = `
+    <p>Id: ${e._id}</p>
+    <p>Titulo: ${e.title}</p>
+    <p>Descripción: ${e.description}</p>
+    <p>Precio: ${e.price}</p>
+    <p>Foto: ${e.thumbnail}</p>
+    <p>Identificador: ${e.code}</p>
+    <p>Stock: ${e.stock}</p>
+    <p>Usuario: ${e.owner}</p>
+    `;
+    prods.appendChild(div);
+  });
+});
+
+socketClient.on("alert", (e) => {
+  if (e.error) {
+    alert(e);
+  } else {
+    alert(e);
+  }
+});
+
+form.onsubmit = (e) => {
+  // form agregar prods
+  e.preventDefault(); // evitar funionamiento x default
+  const userData = {
+    email: {{{toJSON user.role}}} === 'admin' ? undefined : { owner: {{{toJSON user.email}}} },
+    role : {{{toJSON user.role}}} === 'admin' ? 'admin' : { owner: {{{toJSON user.role}}} }
+  }
+  const obj = {
+    status: true,
+    title: title.value,
+    description: desc.value,
+    price: price.value,
+    thumbnail: thumb.value,
+    code: code.value,
+    stock: stock.value,
+    category: "ABC",
+    owner: {{{toJSON user.role}}} === 'admin' ? 'admin' : {{{toJSON user.email}}} 
+  };
+  title.value = "";
+  desc.value = "";
+  price.value = "";
+  thumb.value = "";
+  code.value = "";
+  stock.value = "";
+  prods.value = "";
+  id.value = "";
+  socketClient.emit("send", obj, userData);
+};
+
+formDelete.onsubmit = (e) => {
+  const userData = {
+    email: {{{toJSON user.role}}} === 'admin' ? undefined : { owner: {{{toJSON user.email}}} },
+    role : {{{toJSON user.role}}} === 'admin' ? 'admin' : { owner: {{{toJSON user.role}}} }
+  }
+  e.preventDefault();
+  socketClient.emit("delete", id.value, userData);
+  id.value = "";
+};
+    </script>
+  </body>
+</html>

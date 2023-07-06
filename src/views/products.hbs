@@ -1,0 +1,101 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Productos</title>
+  </head>
+  <body>
+
+    {{#if user}}
+      <header>
+        <nav>
+          <img class="profileImg" src="{{user.photo}}" alt="foto de perfil" />
+          <h3>Bienvenido {{user.first_name}}</h3>
+          <div class="actions">
+          <a href="/cart/{{user.cart}}">Ir al carrito</a>
+          <a href="/login" class="logout">Logout</a>
+          </div>
+        </nav>
+      </header>
+    {{/if}}
+
+    <main>
+
+      {{#if user}}
+      <div class="data">
+        <p>El id de usuario es: <span id="idUSer">{{user._id}}</span></p>
+        <p>El id de tu carrito es: <span id="idCart">{{user.cart}}</span></p>
+        <br>
+        <form method="post">
+          <p>Subir archivos:</p>
+        <input type="file"></input>
+        <button type="submit">Enviar</button>
+        </form>
+      </div>
+        {{#ifEquals user.role "premium"}}
+          <a href="/realTimeProducts">Administrar mis productos</a>
+        {{/ifEquals}}
+        {{#ifEquals user.role "admin"}}
+          <a href="/realTimeProducts">Administrar productos</a>
+        {{/ifEquals}}
+      {{/if}}
+      
+      <h2>Nuestros Productos:</h2>
+      <section id="prods">
+        {{! Aca se encuentran los productos }}
+      </section>
+
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socketClient = io();
+
+const prods = document.getElementById("prods");
+const idCart = document.getElementById('idCart').innerText
+// const url = document.baseURI.replaceAll('/', ' ').split(' ')
+
+socketClient.emit('mongoProds')
+
+let arr = []
+
+socketClient.on('alert', (e) => {
+  if (!!e.error) {
+    alert(e.error)
+  } else {
+    alert(e.message)
+  }
+})
+const render = (e) => {
+  let user = {{{toJSON user}}}
+  e.docs.forEach((elem) => {
+    const div = document.createElement("div");
+    const btn = document.createElement('button')
+    const title = document.createElement('p')
+    const price = document.createElement('p')
+    const owner = document.createElement('p')
+    div.className = "prodCard";
+    title.innerText = elem.title
+    price.innerHTML = `$${elem.price}`
+    owner.innerHTML = `Agregado por: ${elem.owner.replace('@', ' ').split(' ')[0]}`
+    btn.innerText = "Agregar al carrito"
+    btn.addEventListener('click', () => {
+      socketClient.emit('addToCart', { obj: elem, idCart: idCart }, user)
+    })
+    div.appendChild(title)
+    div.appendChild(price)
+    div.appendChild(owner)
+    div.appendChild(btn)
+    prods.appendChild(div);
+  });
+};
+
+socketClient.on('prods', (e) => {
+  prods.innerHTML = ''
+  render(e)
+})
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        first_name:
+          type: string
+          required: true
+        last_name:
+          type: string
+        email:
+          type: string
+          required: true
+          unique: true
+        age:
+          type: number
+          required: true
+          default: 0
+        password:
+          type: string
+          required: true
+        role:
+          type: string
+          enum: [user, premium]
+          default: user
+        photo:
+          type: string
+          default: 'https://i.imgur.com/avx2DwE.jpg'
+        isGithub:
+          type: boolean
+          required: true
+          default: false
+        cart:
+          type: string
+          format: ObjectId
+          ref: products
+        userToken:
+          type: string

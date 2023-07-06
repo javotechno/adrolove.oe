@@ -1,0 +1,10 @@
+{{! Form para actulizar la password desde el user }}
+<form action="/update-password" method="POST">
+  <label for="oldPassword">Contraseña anterior</label>
+  <input type="password" id="oldPassword" name="oldPassword" required>
+
+  <label for="newPassword">Nueva contraseña</label>
+  <input type="password" id="newPassword" name="newPassword" required>
+
+  <button type="submit">Actualizar contraseña</button>
+</form>

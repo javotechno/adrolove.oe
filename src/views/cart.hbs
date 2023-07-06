@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Carrito</title>
+  </head>
+  <body>
+    <main>
+      <h3>Carrito</h3>
+      <section class="cart">
+
+        {{#each cart.products}}
+          <div class="prodCart">
+            <p>{{_id.title}}</p>
+            <p>{{_id.description}}</p>
+            <p>${{_id.price}}</p>
+            <p>Cantidad: {{quantity}}</p>
+          </div>
+        {{/each}}
+        {{#if cart.products}}
+          <button onclick="emptyCart('{{cart._id}}')">Borrar carrito</button>
+          <form id="purchaseForm" method="post" action="">
+            <input type="submit" value="Finalizar compra" />
+          </form>
+        {{/if}}
+      </section>
+
+    </main>
+    <script>
+      const form = document.getElementById('purchaseForm'); const cid = '{{cart._id}}';
+      form.action = `/api/carts/${cid}/purchase`;
+
+      function emptyCart(cartId) {
+      fetch(`/cart/${cartId}`, { method: 'DELETE' })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/'; // Redirige a la página principal después de borrar el carrito
+        } else {
+          console.error('Failed to delete cart');
+        }
+      })
+      .catch(error => console.error(error));
+  }
+    </script>
+  </body>
+</html>

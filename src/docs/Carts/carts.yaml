@@ -1,0 +1,228 @@
+tags:
+  - name: carts
+    description: Operaciones de carritos
+
+paths:
+  /api/cart:
+    post:
+      summary: Crear un carrito
+      tags: [carts]
+      description: Crea un nuevo carrito.
+      responses:
+        200:
+          description: Carrito creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al crear el carrito
+
+  /api/cart/{cid}:
+    get:
+      summary: Obtener un carrito por su ID
+      tags: [carts]
+      description: Obtiene un carrito por su ID.
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          description: ID del carrito
+      responses:
+        200:
+          description: Carrito encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al obtener el carrito
+
+    put:
+      summary: Reemplazar un carrito por su ID
+      tags: [carts]
+      description: Reemplaza un carrito por su ID.
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          description: ID del carrito
+        - in: body
+          name: body
+          schema:
+            $ref: '#/components/schemas/CartReplaceRequest'
+          description: Datos para reemplazar el carrito
+      responses:
+        200:
+          description: Carrito reemplazado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al reemplazar el carrito
+
+    delete:
+      summary: Vaciar un carrito por su ID
+      tags: [carts]
+      description: Vacia un carrito por su ID.
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          description: ID del carrito
+      responses:
+        200:
+          description: Carrito vaciado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al vaciar el carrito
+
+  /api/cart/{cid}/purchase:
+    get:
+      summary: Realizar compra de un carrito por su ID
+      tags: [carts]
+      description: Realiza la compra de un carrito por su ID.
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          description: ID del carrito
+      responses:
+        200:
+          description: Compra realizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al realizar la compra
+
+  /api/cart/{cid}/product/{pid}:
+    post:
+      summary: Agregar un producto a un carrito
+      tags: [carts]
+      description: Agrega un producto a un carrito.
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          description: ID del carrito
+        - in: path
+          name: pid
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        200:
+          description: Producto agregado exitosamente al carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al agregar el producto al carrito
+
+    put:
+      summary: Actualizar la cantidad de un producto en un carrito
+      tags: [carts]
+      description: Actualiza la cantidad de un producto en un carrito.
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          description: ID del carrito
+        - in: path
+          name: pid
+          schema:
+            type: string
+          description: ID del producto
+        - in: body
+          name: body
+          schema:
+            $ref: '#/components/schemas/CartQuantityUpdateRequest'
+          description: Cantidad a actualizar
+      responses:
+        200:
+          description: Cantidad de producto actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al actualizar la cantidad de producto en el carrito
+
+    delete:
+      summary: Eliminar un producto de un carrito
+      tags: [carts]
+      description: Elimina un producto de un carrito.
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          description: ID del carrito
+        - in: path
+          name: pid
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        200:
+          description: Producto eliminado exitosamente del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al eliminar el producto del carrito
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+        products:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      example:
+        _id: 12345
+        products: [67890, 54321]
+        createdAt: 2023-05-17T12:34:56Z
+        updatedAt: 2023-05-17T12:34:56Z
+
+    CartReplaceRequest:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: string
+      example:
+        products: [67890, 54321]
+
+    CartQuantityUpdateRequest:
+      type: object
+      properties:
+        quantity:
+          type: number
+      example:
+        quantity: 5

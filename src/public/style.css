@@ -1,0 +1,294 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+header {
+  border-bottom: 2px solid #000;
+  margin-bottom: 20px;
+}
+main {
+  align-items: center;
+}
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: whitesmoke;
+  color: #333;
+}
+.profileImg {
+  width: 50px;
+  border-radius: 50px;
+}
+h2 {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  color: cornflowerblue;
+}
+h3 {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  color: cornflowerblue;
+}
+.data {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 200px;
+}
+button {
+  margin-top: 20px;
+  width: 100px;
+}
+#prods,
+.cart {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* cart */
+
+.body-cart {
+  background-color: #333;
+  text-align: center;
+
+}
+
+.main-carrito {
+  margin-top: 10rem;
+}
+
+#prods div,
+.prodCart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  padding: 10px;
+  border: solid 2px rgb(183, 183, 183);
+  border-radius: 10px;
+  line-height: 1.8;
+  background-color: #333;
+  color: #fff !important;
+}
+
+.p-carrito {
+  color: cornflowerblue;
+  text-transform: uppercase;
+}
+
+.h1-carrito {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  color: rgb(255, 255, 255);
+}
+
+#chat {
+  margin-top: 20px;
+}
+#chat div {
+  background-color: #333;
+  color: #fff;
+  width: 250px;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+
+/* form */
+
+.body-form {
+  background-color: #333;
+}
+
+#chatForm {
+  background-color: #333;
+  color: whitesmoke;
+  text-transform: uppercase;
+  margin-top: 20rem;
+}
+
+.input-form {
+  margin-bottom: 2rem;
+}
+
+.bottom-env {
+  background-color: cornflowerblue;
+  color: whitesmoke;
+}
+
+/* error loguin */
+
+.main-error {
+  margin: 20rem;
+  padding-left: 20rem;
+}
+
+.body-login-error {
+  color: whitesmoke;
+  background-color: #333;
+}
+.back-loguin {
+  color: cornflowerblue;
+  margin: 5rem;
+}
+
+.rech-loguin {
+  margin-top: 2rem;
+}
+
+/* login */
+
+.body-login {
+  background-color: #333;
+  color: whitesmoke;
+}
+
+.main-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 3rem;
+}
+
+.p-register a {
+  color: whitesmoke;
+  margin: 1rem;
+}
+
+.p-register a:hover {
+  color: cornflowerblue;
+  transition: ease-in-out 1s;
+}
+
+.register-p {
+  margin: 1rem;
+}
+
+.input-enviar {
+  background-color: whitesmoke;
+  color: #333;
+}
+
+.input-enviar:hover {
+  color: cornflowerblue;
+  transition: ease-in-out 1s;
+}
+
+/* products */
+
+.navbar-prod {
+  color: whitesmoke;
+}
+
+.navbar-prod a {
+  color: darkseagreen;
+}
+
+.navbar-prod a:hover {
+  color: cornflowerblue;
+  transition: ease-in-out 1s;
+}
+
+.data {
+  color: darkseagreen;
+  text-transform: uppercase;
+}
+
+.body-form-products {
+  color: darkseagreen;
+}
+
+/* realtimeproducts */
+
+.body-form-products {
+  background-color: #333;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#formDelete {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#formDelete button {
+  color: darkseagreen;
+  background-color: whitesmoke;
+}
+
+#formDelete button:hover {
+  color: cornflowerblue;
+  transition: ease-in-out 1s;
+}
+
+.btn-enviar {
+  color: darkseagreen;
+  background-color: whitesmoke;
+}
+
+.btn-enviar:hover {
+  color: cornflowerblue;
+  transition: ease-in-out 1s;
+}
+
+#form input {
+  margin: 1rem;
+}
+
+/* signup */
+
+.body-signup {
+  background-color: #333;
+  color: whitesmoke;
+}
+
+.back-ref a {
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+.back-ref a:hover {
+  color: cornflowerblue;
+  transition: ease-in-out 1s;
+}
+
+.main-signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 1rem;
+}
+
+.main-signup form {
+  margin: 1rem;
+}
+
+.btn-enviar-signup {
+  background-color: #fff;
+  color: #333;
+}
+
+.btn-enviar-signup:hover {
+  color: cornflowerblue;
+  transition: ease-in-out 1s;
+}

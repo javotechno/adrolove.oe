@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      .reset {
+        background-color: transparent;
+        border: none;
+        border: 2px solid transparent;
+      }
+      .reset:hover {
+        border-bottom: 2px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+
+    <main>
+      <h2>Acceso</h2>
+      <form id="loginForm" action="/login" method="post">
+        <p>Email:</p>
+        <input type="text" name="email" id="user" required />
+        <p>Contraseña:</p>
+        <input type="password" name="password" id="pass" required />
+        <button type="submit">Enviar</button>
+      </form>
+      <p>¿Te olvidaste la contraseña? <a href="/reset-password">click aqui</a>.</p>
+
+      Si no estas registrado/a <a href="/signUp">click aqui</a>.
+      <hr>
+      Tambien puedes ingresar con <a href="/login/github">GitHub</a>
+
+    </main>
+
+  </body>
+</html>

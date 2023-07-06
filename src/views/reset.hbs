@@ -1,0 +1,10 @@
+{{! Form para actulizar la password desde el token }}
+<form action="/reset-password" method="POST">
+  <label for="token">Token de restablecimiento de contraseña</label>
+  <input type="text" id="token" name="token" value={{token}} required>
+
+  <label for="password">Nueva contraseña</label>
+  <input type="password" id="password" name="password" required>
+
+  <button type="submit">Restablecer contraseña</button>
+</form>

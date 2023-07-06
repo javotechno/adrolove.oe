@@ -1,0 +1,100 @@
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: connect.sid
+
+security:
+  - cookieAuth: []
+
+tags:
+  - name: users
+    description: Operaciones de usuario
+
+paths:
+  /login:
+    post:
+      summary: Iniciar sesión
+      tags: [users]
+      description: Inicia sesión con las credenciales proporcionadas.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              example:
+                email: example@example.com
+                password: password123
+      responses:
+        302:
+          description: Redireccionamiento exitoso después de iniciar sesión
+          headers:
+            Location:
+              schema:
+                type: string
+        500:
+          description: Error al iniciar sesión
+
+  /reset-password:
+    post:
+      summary: Solicitar restablecimiento de contraseña
+      tags: [users]
+      description: Solicita un restablecimiento de contraseña para el correo electrónico proporcionado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+              example:
+                email: example@example.com
+      responses:
+        200:
+          description: Correo electrónico de restablecimiento de contraseña enviado exitosamente
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error al solicitar el restablecimiento de contraseña
+
+  /update-password:
+    post:
+      summary: Actualizar contraseña
+      tags: [users]
+      description: Actualiza la contraseña del usuario.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                oldPassword:
+                  type: string
+                newPassword:
+                  type: string
+              example:
+                userId: 12345
+                oldPassword: oldPassword123
+                newPassword: newPassword123
+      responses:
+        200:
+          description: Contraseña actualizada exitosamente
+        400:
+          description: La contraseña antigua no coincide o la nueva contraseña es la misma que la anterior
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error al actualizar la contraseña
+
